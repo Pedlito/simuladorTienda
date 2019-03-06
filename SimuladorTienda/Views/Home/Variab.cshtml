@@ -1,0 +1,55 @@
+﻿@using SimuladorTienda.Models;
+@using System.Collections.Generic;
+
+@{
+    ViewBag.Title = "Variab";
+
+    List<Compra> regs = ViewBag.registros as List<Compra>;
+   
+   
+}
+
+<h2>Utilidad neta</h2>
+
+@foreach (Compra item in regs)
+{
+    <table class="table table-sm">
+        <thead>
+            <tr>
+                <th>Person @(regs.IndexOf(item)+1)</th>
+                <th>Product</th>
+                <th>Cant</th>
+                <th>Costo</th>
+                <th>Precio</th>
+                <th>Util</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var det in item.detallesDeCompra)
+            {
+            
+                <tr>
+                    <td> </td>
+                    <td> @det.producto.nombre</td>
+                    <td> @det.cantidad</td>
+                    <td> @det.producto.costo</td>
+                    <td> @det.producto.precio</td>
+                    <td>@det.utilidadDet()</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <br />
+   
+}
+
+<p>Gatos total mensual: @ViewBag.gastosTatales</p>
+<p>Gastos por hora calculada:   @ViewBag.gastosPh</p>
+<p>Gastos a restar @ViewBag.gastoRestar</p>
+
+<p>Utilidad total por compras para esta simulacion : @ViewBag.utilidadCompras</p>
+
+<p>Ganancia total despues de restar gastos:    @ViewBag.UtilidadTotal </p>
+
+

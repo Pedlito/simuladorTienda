@@ -1,0 +1,169 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="tiendaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tbcategoria">
+          <Key>
+            <PropertyRef Name="idcat" />
+          </Key>
+          <Property Name="idcat" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="estado" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbgastos">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="monto" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbproducto">
+          <Key>
+            <PropertyRef Name="idp" />
+          </Key>
+          <Property Name="idp" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="costo" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="precio" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="preferencia" Type="int" Nullable="false" />
+          <Property Name="idcate" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_tbproducto_tbcategoria">
+          <End Role="tbcategoria" Type="Self.tbcategoria" Multiplicity="1" />
+          <End Role="tbproducto" Type="Self.tbproducto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbcategoria">
+              <PropertyRef Name="idcat" />
+            </Principal>
+            <Dependent Role="tbproducto">
+              <PropertyRef Name="idcate" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="tiendaModelStoreContainer">
+          <EntitySet Name="tbcategoria" EntityType="Self.tbcategoria" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbgastos" EntityType="Self.tbgastos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbproducto" EntityType="Self.tbproducto" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tbproducto_tbcategoria" Association="Self.FK_tbproducto_tbcategoria">
+            <End Role="tbcategoria" EntitySet="tbcategoria" />
+            <End Role="tbproducto" EntitySet="tbproducto" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="tiendaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="tiendaEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tbcategoria" EntityType="tiendaModel.tbcategoria" />
+          <EntitySet Name="tbgastos" EntityType="tiendaModel.tbgastos" />
+          <EntitySet Name="tbproducto" EntityType="tiendaModel.tbproducto" />
+          <AssociationSet Name="FK_tbproducto_tbcategoria" Association="tiendaModel.FK_tbproducto_tbcategoria">
+            <End Role="tbcategoria" EntitySet="tbcategoria" />
+            <End Role="tbproducto" EntitySet="tbproducto" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="tbcategoria">
+          <Key>
+            <PropertyRef Name="idcat" />
+          </Key>
+          <Property Name="idcat" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="tbproducto" Relationship="tiendaModel.FK_tbproducto_tbcategoria" FromRole="tbcategoria" ToRole="tbproducto" />
+        </EntityType>
+        <EntityType Name="tbgastos">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="monto" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="tbproducto">
+          <Key>
+            <PropertyRef Name="idp" />
+          </Key>
+          <Property Name="idp" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="costo" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="precio" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="preferencia" Type="Int32" Nullable="false" />
+          <Property Name="idcate" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tbcategoria" Relationship="tiendaModel.FK_tbproducto_tbcategoria" FromRole="tbproducto" ToRole="tbcategoria" />
+        </EntityType>
+        <Association Name="FK_tbproducto_tbcategoria">
+          <End Type="tiendaModel.tbcategoria" Role="tbcategoria" Multiplicity="1" />
+          <End Type="tiendaModel.tbproducto" Role="tbproducto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbcategoria">
+              <PropertyRef Name="idcat" />
+            </Principal>
+            <Dependent Role="tbproducto">
+              <PropertyRef Name="idcate" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="tiendaModelStoreContainer" CdmEntityContainer="tiendaEntities">
+          <EntitySetMapping Name="tbcategoria">
+            <EntityTypeMapping TypeName="tiendaModel.tbcategoria">
+              <MappingFragment StoreEntitySet="tbcategoria">
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="idcat" ColumnName="idcat" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbgastos">
+            <EntityTypeMapping TypeName="tiendaModel.tbgastos">
+              <MappingFragment StoreEntitySet="tbgastos">
+                <ScalarProperty Name="monto" ColumnName="monto" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbproducto">
+            <EntityTypeMapping TypeName="tiendaModel.tbproducto">
+              <MappingFragment StoreEntitySet="tbproducto">
+                <ScalarProperty Name="idcate" ColumnName="idcate" />
+                <ScalarProperty Name="preferencia" ColumnName="preferencia" />
+                <ScalarProperty Name="precio" ColumnName="precio" />
+                <ScalarProperty Name="costo" ColumnName="costo" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="idp" ColumnName="idp" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

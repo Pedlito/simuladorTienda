@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using SimuladorTienda.Models;
 
 namespace SimuladorTienda.Controllers
 {
     public class HomeController : Controller
     {
+     
         public ActionResult Index()
         {
             return View();
@@ -26,5 +28,39 @@ namespace SimuladorTienda.Controllers
 
             return View();
         }
+        [HttpGet]
+        public ActionResult Variable() {
+
+            return View(new Variables());
+        }
+        [HttpPost]
+        public ActionResult Variab(Variables variable)
+        {
+            Rango r = new Rango(variable);
+            r.rangoHoras();
+            double utilidadp = 0;
+            foreach (var comp in r.comprass) {
+                utilidadp += comp.utilidadCompra();
+            }
+            ViewBag.utilidadCompras = utilidadp;
+          
+            ViewBag.registros=r.comprass;
+           double gastosTotales=0;
+            foreach (var l in r.listaGastos) {
+                gastosTotales += (double)l.monto;
+            }
+
+            ViewBag.gastosTatales = gastosTotales;
+            double gastosPh = ((gastosTotales / 30) / 12);
+            ViewBag.gastosPh = gastosPh;
+            double gstor = ((gastosPh) * variable.Cant_horas);
+            ViewBag.gastoRestar = gstor;
+            double UtilidadTotal = utilidadp - gstor;
+            ViewBag.UtilidadTotal = UtilidadTotal;
+
+            return View();
+        }
     }
+    
+
 }
