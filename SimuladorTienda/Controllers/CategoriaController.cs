@@ -51,6 +51,7 @@ namespace SimuladorTienda.Controllers
         {
             if (ModelState.IsValid)
             {
+                tbcategoria.estado = true;
                 db.tbcategoria.Add(tbcategoria);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
@@ -83,6 +84,7 @@ namespace SimuladorTienda.Controllers
         {
             if (ModelState.IsValid)
             {
+                tbcategoria.estado = true;
                 db.Entry(tbcategoria).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");

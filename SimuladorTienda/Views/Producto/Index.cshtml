@@ -5,54 +5,60 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Productos</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <a href="@Url.Action("Create")" class="btn btn-primary">
+        Nueva categoría
+    </a>
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.nombre)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.costo)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.precio)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.preferencia)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.tbcategoria.nombre)
-        </th>
-        <th></th>
-    </tr>
+<table class="table table-sm">
+    <thead>
+        <tr>
+            <th>
+                Nombre
+            </th>
+            <th>
+                Categoría
+            </th>
+            <th>
+                Costo
+            </th>
+            <th>
+                Precio
+            </th>
+            <th>
+                Preferencia
+            </th>
+            <th></th>
+        </tr>
+    </thead>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.nombre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.costo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.precio)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.preferencia)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.tbcategoria.nombre)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.idp }) |
-            @Html.ActionLink("Details", "Details", new { id=item.idp }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.idp })
-        </td>
-    </tr>
-}
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.tbcategoria.nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.costo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.precio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.preferencia)
+                </td>
+                <td>
+                    <a href="@Url.Action("Edit", new { id=item.idp })" class="btn btn-primary btn-sm"><span class="fa fa-pencil"></span></a>
+                    <a href="@Url.Action("Delete", new { id=item.idp })" class="btn btn-danger btn-sm"><span class="fa fa-trash"></span></a>
+                </td>
+            </tr>
+        }
+    </tbody>
 
 </table>

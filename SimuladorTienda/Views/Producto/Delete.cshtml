@@ -5,15 +5,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Delete</h2>
-
-<h3>Are you sure you want to delete this?</h3>
+<h3>¿Realmente quieres eliminar este producto?</h3>
 <div>
-    <h4>tbproducto</h4>
     <hr />
-    <dl class="dl-horizontal">
+    <dl class="dl-horizontal col-md-4">
         <dt>
-            @Html.DisplayNameFor(model => model.nombre)
+            <label>Nombre del producto</label>
         </dt>
 
         <dd>
@@ -21,7 +18,15 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.costo)
+            <label>Categoría</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tbcategoria.nombre)
+        </dd>
+
+        <dt>
+            <label>Costo</label>
         </dt>
 
         <dd>
@@ -29,7 +34,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.precio)
+            <label>Precio</label>
         </dt>
 
         <dd>
@@ -37,19 +42,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.preferencia)
+            <label>Preferencia</label>
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.preferencia)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.tbcategoria.nombre)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.tbcategoria.nombre)
         </dd>
 
     </dl>
@@ -57,9 +54,19 @@
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+    <div class="form-group">
+        <div class="col-md-4">
+            <div class="row">
+                <div class="col-md-6 text-center">
+                    <input type="submit" value="Eliminar" class="btn btn-danger btn-block" />
+                </div>
+                <div class="col-md-6 text-center">
+                    <a href="@Url.Action("Index")" class="btn btn-warning btn-block">
+                        Cancelar
+                    </a>
+                </div>
+            </div>
         </div>
+    </div>
     }
 </div>

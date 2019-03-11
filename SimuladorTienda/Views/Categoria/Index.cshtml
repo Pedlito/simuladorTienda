@@ -5,34 +5,35 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Categorias</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <a href="@Url.Action("Create")" class="btn btn-primary">
+        Nueva categoría
+    </a>
 </p>
-<table class="table">
+<table class="table table-sm">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.nombre)
+            Nombre de categoría
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.estado)
+            Estado
         </th>
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
-        <td>
+        <td class="align-middle">
             @Html.DisplayFor(modelItem => item.nombre)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.estado)
+        <td class="align-middle">
+            @((item.estado == true) ? "Activo" : "Inactivo")
         </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.idcat }) |
-            @Html.ActionLink("Details", "Details", new { id=item.idcat }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.idcat })
+        <td class="align-middle">
+            <a href="@Url.Action("Edit", new { id=item.idcat })" class="btn btn-primary btn-sm"><span class="fa fa-pencil"></span></a>
+            <a href="@Url.Action("Delete", new { id=item.idcat })" class="btn btn-danger btn-sm"><span class="fa fa-trash"></span></a>
         </td>
     </tr>
 }
