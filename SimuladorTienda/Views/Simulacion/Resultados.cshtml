@@ -1,0 +1,61 @@
+﻿@model IEnumerable<SimuladorTienda.Models.HoraVenta>
+@using SimuladorTienda.Models;
+@{
+    ViewBag.Title = "Resultados";
+}
+
+<h2>Resultados generales</h2>
+
+<p>
+    <button class="btn btn-primary" onclick="window.history.back()">
+        Regresar
+    </button>
+</p>
+
+@for (int codPrueba = 1; codPrueba <= 3; codPrueba++)
+{
+    double total = 0;
+    <hr />
+    <h3>Prueba <text>@codPrueba</text></h3>
+    <table class="table table-sm table-striped">
+        <tr>
+            <th>Hora</th>
+            <th>Número de Ventas</th>
+            <th>Utilidad</th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.Where(t => t.codPrueba == codPrueba))
+        {
+            <tr>
+                <td>
+                    @item.numhora
+                </td>
+                <td>
+                    @item.numVentas
+                </td>
+                <td>
+                    Q @item.utilidad
+                </td>
+                <td>
+                    <a href="@Url.Action("ResultadosHora", new { codPrueba = item.codPrueba, numHora = item.numhora})" class="btn btn-primary bt-sm" >
+                        <i class="fa fa-list"></i> Detalle
+                    </a>
+                </td>
+            </tr>
+            total += item.utilidad;
+        }
+
+        <tfoot>
+            <tr>
+                <td colspan="2" class="text-right">
+                    Utilidad Total:
+                </td>
+                <td colspan="2">
+                    Q @total
+                </td>
+            </tr>
+        </tfoot>
+
+    </table>
+}

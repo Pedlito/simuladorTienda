@@ -1,15 +1,16 @@
 ﻿@model SimuladorTienda.Models.Variables
 
 @{
-    ViewBag.Title = "Variable";
+    ViewBag.Title = "Index";
 }
 
-<h2>Simulación</h2>
+<h2>Index</h2>
 
 
-@using (Html.BeginForm("Variab", "Home", FormMethod.Post, new { @id = "formRol", @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("Simulacion", "Simulacion"))
 {
     @Html.AntiForgeryToken()
+
     <hr />
     <h4>Ingrese los datos para poder realizar la simulación</h4>
     <div class="form-group">
@@ -59,7 +60,7 @@
                     <input type="submit" value="Simular" class="btn btn-primary btn-block" />
                 </div>
                 <div class="col-md-6 text-center">
-                    <a href="@Url.Action("Index")" class="btn btn-warning btn-block">
+                    <a href="@Url.Action("Index", "Home")" class="btn btn-warning btn-block">
                         Cancelar
                     </a>
                 </div>
@@ -67,10 +68,6 @@
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

@@ -18,7 +18,6 @@ namespace SimuladorTienda.Controllers
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
-
             return View();
         }
 
@@ -31,8 +30,9 @@ namespace SimuladorTienda.Controllers
         [HttpGet]
         public ActionResult Variable() {
 
-            return View(new Variables());
+            return View();
         }
+
         [HttpPost]
         public ActionResult Variab(Variables variable)
         {
@@ -53,7 +53,7 @@ namespace SimuladorTienda.Controllers
             ViewBag.gastosTatales = gastosTotales;
             double gastosPh = ((gastosTotales / 30) / 12);
             ViewBag.gastosPh = gastosPh;
-            double gstor = ((gastosPh) * variable.Cant_horas);
+            double gstor = ((gastosPh) * variable.horasSimular);
             ViewBag.gastoRestar = gstor;
             double UtilidadTotal = utilidadp - gstor;
             ViewBag.UtilidadTotal = UtilidadTotal;

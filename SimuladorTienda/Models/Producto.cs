@@ -5,36 +5,17 @@ using System.Web;
 
 namespace SimuladorTienda.Models
 {
-   
-    public class Variables
-    {
-        public int tasaLlegada { get; set; }
-        public int tasaServicio { get; set; }
-        public int cant_min_comp { get; set; }
-        public int cat_max_comp { get; set; }
-        public int Cant_horas { get; set; }
-    }
- 
-    public class DetalleCompra
-    {
-        public tbproducto producto { get; set; }
-        public int cantidad { get; set; }
-        public double utilidadDet() {
-           return  (double)((producto.precio - producto.costo) * cantidad);
-        }
-    }
-
     public class Compra
     {
       int cantid =0;
        
 
-      public List<DetalleCompra> detallesDeCompra;
+      public List<DetalleVenta> detallesDeCompra;
         //constructor
         public Compra(int cant)
         {
             this.cantid = cant;       
-            detallesDeCompra = new List<DetalleCompra>();
+            detallesDeCompra = new List<DetalleVenta>();
         }
         //base de datos
         private tiendaEntities db = new tiendaEntities();
@@ -44,14 +25,14 @@ namespace SimuladorTienda.Models
             switch (op)
             {
                 case 1:
-                    detallesDeCompra.Add(new DetalleCompra() { producto = seleccionarBebida(), cantidad =cantid});
+                    detallesDeCompra.Add(new DetalleVenta() { producto = seleccionarBebida(), cantidad =cantid});
                     break;
                 case 2:
-                   detallesDeCompra.Add(new DetalleCompra() { producto = seleccionarComida(), cantidad = cantid});
+                   detallesDeCompra.Add(new DetalleVenta() { producto = seleccionarComida(), cantidad = cantid});
                     break;
                 case 3:
-                    detallesDeCompra.Add(new DetalleCompra() { producto = seleccionarBebida(), cantidad = cantid});
-                    detallesDeCompra.Add(new DetalleCompra() { producto = seleccionarComida(), cantidad = cantid});
+                    detallesDeCompra.Add(new DetalleVenta() { producto = seleccionarBebida(), cantidad = cantid});
+                    detallesDeCompra.Add(new DetalleVenta() { producto = seleccionarComida(), cantidad = cantid});
                     break;
             }
 
@@ -80,7 +61,7 @@ namespace SimuladorTienda.Models
         public double utilidadCompra() {
             double util = 0.0;
             foreach (var det in detallesDeCompra) {
-                util +=det.utilidadDet();
+                //util +=det.utilidadDet();
             }
             return util;
         }
@@ -107,7 +88,7 @@ namespace SimuladorTienda.Models
            // int o = rnd.Next(1, 4); // creates a number between 1 and 3
 
 
-            int numPpersonas = variable.Cant_horas * variable.tasaLlegada;
+            int numPpersonas = variable.horasSimular * rnd.Next(variable.tasaLlegadaMinima, variable.tasaLlegadaMaxima);
             //  double utilidadTotal = 0.0;
      
                  listaGastos= db.tbgastos.ToList();
@@ -124,7 +105,7 @@ namespace SimuladorTienda.Models
 
             for (int i = 1; i <= numPpersonas; i++)
             {
-                Compra comp = new Compra(rnd.Next(variable.cant_min_comp,variable.cat_max_comp+1));
+                Compra comp = new Compra(rnd.Next(variable.cantComprasMinima, variable.cantComprasMaxima + 1));
                 comp.elegir(rnd.Next(1, 4));
                 comprass.Add(comp);
 

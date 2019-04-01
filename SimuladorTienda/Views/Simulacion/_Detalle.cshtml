@@ -1,0 +1,41 @@
+﻿@model SimuladorTienda.Models.Venta
+@using SimuladorTienda.Models;
+
+<div class="container">
+    <table class="table">
+        <tr>
+            <th>
+                Producto
+            </th>
+            <th>
+                Utilidad
+            </th>
+            <th>
+                Cantidad
+            </th>
+            <th>
+                Total
+            </th>
+        </tr>
+
+        @foreach (DetalleVenta item in Model.detalle)
+        {
+            <tr>
+                <td>
+                    @item.producto.nombre
+                </td>
+                <td>
+                    @item.getUtilidad()
+                </td>
+                <td>
+                    @item.cantidad
+                </td>
+                <td>
+                    @(item.getUtilidad() * item.cantidad)
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+
