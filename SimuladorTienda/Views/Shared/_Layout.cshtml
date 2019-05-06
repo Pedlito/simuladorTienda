@@ -19,17 +19,17 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="@Url.Action("Index", "Simulacion")">Simulación</a>                    
-                    </li>    
+                        <a class="nav-link" href="@Url.Action("Index", "Simulacion")">Simulación</a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="@Url.Action("Index", "Categoria")">Categoria</a>
-                    </li> 
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="@Url.Action("Index", "Producto")">Producto</a>
-                    </li>   
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/Gastos/Index">Gastos</a>
-                    </li>   
+                    </li>
                 </ul>
             </div>
         </div>
@@ -45,6 +45,7 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/chart")
     @RenderSection("scripts", required: false)
 </body>
 </html>

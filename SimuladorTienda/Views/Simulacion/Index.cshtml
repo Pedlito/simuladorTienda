@@ -6,60 +6,59 @@
 
 <h2>Index</h2>
 
+<h4>Ingrese los datos para poder realizar la simulación</h4>
+<div class="form-group">
+    <div class="col-md-4">
+    </div>
+</div>
 
 @using (Html.BeginForm("Simulacion", "Simulacion"))
 {
     @Html.AntiForgeryToken()
 
     <hr />
-    <h4>Ingrese los datos para poder realizar la simulación</h4>
-    <div class="form-group">
-        <div class="col-md-4">
+    <div class="row">
+        <div class="col">
             <label for="nombre">Tasa de llegada mínima</label>
             @Html.EditorFor(model => model.tasaLlegadaMinima, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.tasaLlegadaMinima, "", new { @class = "text-danger" })
         </div>
-    </div>
-
-    <div class="form-group">
-        <div class="col-md-4">
+        <div class="col">
             <label for="nombre">Tasa de llegada máxima</label>
             @Html.EditorFor(model => model.tasaLlegadaMaxima, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.tasaLlegadaMaxima, "", new { @class = "text-danger" })
         </div>
     </div>
-
-    <div class="form-group">
-        <div class="col-md-4">
+    <br />
+    <div class="row">
+        <div class="col">
             <label for="nombre">Cantidad minima de compras</label>
             @Html.EditorFor(model => model.cantComprasMinima, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.cantComprasMinima, "", new { @class = "text-danger" })
         </div>
-    </div>
-
-    <div class="form-group">
-        <div class="col-md-4">
+        <div class="col">
             <label for="nombre">Cantidad máxima de compras</label>
             @Html.EditorFor(model => model.cantComprasMaxima, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.cantComprasMaxima, "", new { @class = "text-danger" })
         </div>
     </div>
-
-    <div class="form-group">
-        <div class="col-md-4">
+    <br />
+    <div class="row">
+        <div class="col">
             <label for="nombre">Número de horas</label>
             @Html.EditorFor(model => model.horasSimular, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.horasSimular, "", new { @class = "text-danger" })
         </div>
+        <div class="col"></div>
     </div>
-
-    <div class="form-group">
-        <div class="col-md-4">
+    <br />
+    <div class="row">
+        <div class="offset-md-4 col-md-4">
             <div class="row">
-                <div class="col-md-6 text-center">
+                <div class="col text-center">
                     <input type="submit" value="Simular" class="btn btn-primary btn-block" />
                 </div>
-                <div class="col-md-6 text-center">
+                <div class="col text-center">
                     <a href="@Url.Action("Index", "Home")" class="btn btn-warning btn-block">
                         Cancelar
                     </a>

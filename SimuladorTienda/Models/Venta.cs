@@ -12,9 +12,9 @@ namespace SimuladorTienda.Models
         public int numHora { get; set; }
         public List<DetalleVenta> detalle { get; set; }
 
-        public double getUtilidad()
+        public decimal getUtilidad()
         {
-            double utilidad = 0;
+            decimal utilidad = 0;
             foreach (DetalleVenta det in detalle)
             {
                 utilidad += det.getUtilidad() * det.cantidad;

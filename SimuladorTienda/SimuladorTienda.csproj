@@ -146,6 +146,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\DatosCola.cs" />
     <Compile Include="Models\dbTienda.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -163,6 +164,7 @@
     </Compile>
     <Compile Include="Models\DetalleVenta.cs" />
     <Compile Include="Models\HoraVenta.cs" />
+    <Compile Include="Models\Probabilidad.cs" />
     <Compile Include="Models\Producto.cs" />
     <Compile Include="Models\Simulacion.cs" />
     <Compile Include="Models\tbcategoria.cs">
@@ -205,6 +207,8 @@
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\Chart.js" />
+    <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
     <Content Include="Scripts\esm\popper.js" />

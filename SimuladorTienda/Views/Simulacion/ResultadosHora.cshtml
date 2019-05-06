@@ -19,15 +19,15 @@
         <th>Utilidad</th>
         <th></th>
     </tr>
-    @{ int contador = 1; double total = 0; }
+    @{ int contador = 1; decimal total = 0; }
     @foreach (var item in Model)
     {
         <tr>
-            <td>
+            <td class="align-middle">
                 @contador
             </td>
-            <td>
-                @item.getUtilidad()
+            <td class="align-middle">
+                Q @item.getUtilidad()
             </td>
             <td>
                 <button class="btn btn-primary bt-sm" onclick="getDetalle(@item.codVenta)">
@@ -41,10 +41,10 @@
 
     <tfoot>
         <tr>
-            <td class="text-right">
+            <td class="text-right align-middle">
                 Utilidad Total:
             </td>
-            <td>
+            <td class="align-middle">
                 Q @total
             </td>
         </tr>

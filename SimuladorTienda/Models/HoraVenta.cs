@@ -9,7 +9,7 @@ namespace SimuladorTienda.Models
     {
         public int codPrueba { get; set; }
         public int numhora { get; set; }
-        public double utilidad { get; set; }
+        public decimal utilidad { get; set; }
         public int numVentas { get; set; }
     }
 }

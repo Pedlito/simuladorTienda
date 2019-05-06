@@ -2,6 +2,10 @@
 @using SimuladorTienda.Models;
 @{
     ViewBag.Title = "Resultados";
+    List<DatosCola> datosColas = (List<DatosCola>)ViewBag.datosColas;
+    DatosCola cola1 = datosColas.Where(t => t.codPrueba == 1).FirstOrDefault();
+    DatosCola cola2 = datosColas.Where(t => t.codPrueba == 2).FirstOrDefault();
+    DatosCola cola3 = datosColas.Where(t => t.codPrueba == 3).FirstOrDefault();
 }
 
 <h2>Resultados generales</h2>
@@ -12,50 +16,528 @@
     </button>
 </p>
 
-@for (int codPrueba = 1; codPrueba <= 3; codPrueba++)
-{
-    double total = 0;
-    <hr />
-    <h3>Prueba <text>@codPrueba</text></h3>
-    <table class="table table-sm table-striped">
-        <tr>
-            <th>Hora</th>
-            <th>Número de Ventas</th>
-            <th>Utilidad</th>
-            <th></th>
-        </tr>
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Prueba 1</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Prueba 2</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Prueba 3</a>
+    </li>
+</ul>
 
-        @foreach (var item in Model.Where(t => t.codPrueba == codPrueba))
-        {
-            <tr>
-                <td>
-                    @item.numhora
-                </td>
-                <td>
-                    @item.numVentas
-                </td>
-                <td>
-                    Q @item.utilidad
-                </td>
-                <td>
-                    <a href="@Url.Action("ResultadosHora", new { codPrueba = item.codPrueba, numHora = item.numhora})" class="btn btn-primary bt-sm" >
-                        <i class="fa fa-list"></i> Detalle
-                    </a>
-                </td>
-            </tr>
-            total += item.utilidad;
+<div class="tab-content" id="myTabContent">
+
+    @*Prueba 1*@
+    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+        @{
+            decimal total = 0;
+            decimal gastoTotal = ViewBag.gastoTotal;
         }
+        <div class="container">
+            <br />
+            <h3>Prueba 1</h3>
+            <table class="table table-sm table-striped">
+                <tr>
+                    <th>Hora</th>
+                    <th>Número de Ventas</th>
+                    <th>Utilidad</th>
+                    <th></th>
+                </tr>
 
-        <tfoot>
-            <tr>
-                <td colspan="2" class="text-right">
-                    Utilidad Total:
-                </td>
-                <td colspan="2">
-                    Q @total
-                </td>
-            </tr>
-        </tfoot>
+                @foreach (var item in Model.Where(t => t.codPrueba == 1))
+                {
+                    <tr>
+                        <td class="align-middle">
+                            @item.numhora
+                        </td>
+                        <td class="align-middle">
+                            @item.numVentas
+                        </td>
+                        <td class="align-middle">
+                            Q @item.utilidad
+                        </td>
+                        <td>
+                            <a href="@Url.Action("ResultadosHora", new { codPrueba = item.codPrueba, numHora = item.numhora})" class="btn btn-primary btn-sm">
+                                <i class="fa fa-list"></i> Detalle
+                            </a>
+                        </td>
+                    </tr>
+                    total += item.utilidad;
+                }
 
-    </table>
-}
+                <tfoot>
+                    <tr>
+                        <td colspan="2" class="text-right">
+                            Utilidad Total:
+                        </td>
+                        <td colspan="2">
+                            Q @total
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="text-right">
+                            Gasto Total:
+                        </td>
+                        <td colspan="2">
+                            Q @gastoTotal
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="text-right">
+                            Utilidad Final:
+                        </td>
+                        <td colspan="2">
+                            Q @(total - gastoTotal)
+                        </td>
+                    </tr>
+                </tfoot>
+
+            </table>
+
+            <div class="container">
+                <br />
+                <div class="row">
+                    <div class="col-12">
+                        <h3>Grafico: Probabilidad de encontrar "x" personas</h3>
+                    </div>
+                    <div class="col-10 offset-1">
+                        <canvas id="prueba1"></canvas>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <h3>Datos:</h3>
+                    </div>
+
+                    <div class="col-5 offset-1">
+                        <div>
+                            <div class="form-group row">
+                                <label class="col-5 col-form-label">Tasa de llegadas:</label>
+                                <div class="col">
+                                    <input type="text" readonly class="form-control-plaintext" value="@cola1.tasaLlegada" />
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-5 col-form-label">Tasa de servicios:</label>
+                                <div class="col">
+                                    <input type="text" readonly class="form-control-plaintext" value="@cola1.tasaServicio" />
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-5 col-form-label">Utilización:</label>
+                                <div class="col">
+                                    <input type="text" readonly class="form-control-plaintext" value="@cola1.utilizacion" />
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-5 col-form-label">Lq:</label>
+                                <div class="col">
+                                    <input type="text" readonly class="form-control-plaintext" value="@cola1.lq" />
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-5 col-form-label">Ls:</label>
+                                <div class="col">
+                                    <input type="text" readonly class="form-control-plaintext" value="@cola1.ls" />
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-5 col-form-label">Wq:</label>
+                                <div class="col">
+                                    <input type="text" readonly class="form-control-plaintext" value="@cola1.wq" />
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-5 col-form-label">Ws:</label>
+                                <div class="col">
+                                    <input type="text" readonly class="form-control-plaintext" value="@cola1.ws" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    @*Prueba 2*@
+    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+        @{
+            decimal total2 = 0;
+        }
+        <div class="container">
+            <br />
+            <h3>Prueba 2</h3>
+            <table class="table table-sm table-striped">
+                <tr>
+                    <th>Hora</th>
+                    <th>Número de Ventas</th>
+                    <th>Utilidad</th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model.Where(t => t.codPrueba == 2))
+                {
+                    <tr>
+                        <td class="align-middle">
+                            @item.numhora
+                        </td>
+                        <td class="align-middle">
+                            @item.numVentas
+                        </td>
+                        <td class="align-middle">
+                            Q @item.utilidad
+                        </td>
+                        <td>
+                            <a href="@Url.Action("ResultadosHora", new { codPrueba = item.codPrueba, numHora = item.numhora})" class="btn btn-primary btn-sm">
+                                <i class="fa fa-list"></i> Detalle
+                            </a>
+                        </td>
+                    </tr>
+                    total += item.utilidad;
+                }
+
+                <tfoot>
+                    <tr>
+                        <td colspan="2" class="text-right">
+                            Utilidad Total:
+                        </td>
+                        <td colspan="2">
+                            Q @total2
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="text-right">
+                            Gasto Total:
+                        </td>
+                        <td colspan="2">
+                            Q @gastoTotal
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="text-right">
+                            Utilidad Final:
+                        </td>
+                        <td colspan="2">
+                            Q @(total2 - gastoTotal)
+                        </td>
+                    </tr>
+                </tfoot>
+
+            </table>
+
+            <div class="container">
+                <br />
+                <div class="row">
+                    <div class="col-12">
+                        <h3>Grafico: Probabilidad de encontrar "x" personas</h3>
+                    </div>
+                    <div class="col-10 offset-1">
+                        <canvas id="prueba2"></canvas>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <h3>Datos:</h3>
+                    </div>
+
+                    <div class="col-5 offset-1">
+                        <div>
+                            <div class="form-group row">
+                                <label class="col-5 col-form-label">Tasa de llegadas:</label>
+                                <div class="col">
+                                    <input type="text" readonly class="form-control-plaintext" value="@cola2.tasaLlegada" />
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-5 col-form-label">Tasa de servicios:</label>
+                                <div class="col">
+                                    <input type="text" readonly class="form-control-plaintext" value="@cola2.tasaServicio" />
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-5 col-form-label">Utilización:</label>
+                                <div class="col">
+                                    <input type="text" readonly class="form-control-plaintext" value="@cola2.utilizacion" />
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-5 col-form-label">Lq:</label>
+                                <div class="col">
+                                    <input type="text" readonly class="form-control-plaintext" value="@cola2.lq" />
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-5 col-form-label">Ls:</label>
+                                <div class="col">
+                                    <input type="text" readonly class="form-control-plaintext" value="@cola2.ls" />
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-5 col-form-label">Wq:</label>
+                                <div class="col">
+                                    <input type="text" readonly class="form-control-plaintext" value="@cola2.wq" />
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-5 col-form-label">Ws:</label>
+                                <div class="col">
+                                    <input type="text" readonly class="form-control-plaintext" value="@cola2.ws" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    @*Prueba 3*@
+    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+        @{
+            decimal total3 = 0;
+        }
+        <div class="container">
+            <br />
+            <h3>Prueba 3</h3>
+            <table class="table table-sm table-striped">
+                <tr>
+                    <th>Hora</th>
+                    <th>Número de Ventas</th>
+                    <th>Utilidad</th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model.Where(t => t.codPrueba == 3))
+                {
+                    <tr>
+                        <td class="align-middle">
+                            @item.numhora
+                        </td>
+                        <td class="align-middle">
+                            @item.numVentas
+                        </td>
+                        <td class="align-middle">
+                            Q @item.utilidad
+                        </td>
+                        <td>
+                            <a href="@Url.Action("ResultadosHora", new { codPrueba = item.codPrueba, numHora = item.numhora})" class="btn btn-primary btn-sm">
+                                <i class="fa fa-list"></i> Detalle
+                            </a>
+                        </td>
+                    </tr>
+                    total += item.utilidad;
+                }
+
+                <tfoot>
+                    <tr>
+                        <td colspan="2" class="text-right">
+                            Utilidad Total:
+                        </td>
+                        <td colspan="2">
+                            Q @total3
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="text-right">
+                            Gasto Total:
+                        </td>
+                        <td colspan="2">
+                            Q @gastoTotal
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="text-right">
+                            Utilidad Final:
+                        </td>
+                        <td colspan="2">
+                            Q @(total3 - gastoTotal)
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <div class="container">
+                <br />
+                <div class="row">
+                    <div class="col-12">
+                        <h3>Grafico: Probabilidad de encontrar "x" personas</h3>
+                    </div>
+                    <div class="col-10 offset-1">
+                        <canvas id="prueba3"></canvas>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <h3>Datos:</h3>
+                    </div>
+
+                    <div class="col-5 offset-1">
+                        <div>
+                            <div class="form-group row">
+                                <label class="col-5 col-form-label">Tasa de llegadas:</label>
+                                <div class="col">
+                                    <input type="text" readonly class="form-control-plaintext" value="@cola3.tasaLlegada" />
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-5 col-form-label">Tasa de servicios:</label>
+                                <div class="col">
+                                    <input type="text" readonly class="form-control-plaintext" value="@cola3.tasaServicio" />
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-5 col-form-label">Utilización:</label>
+                                <div class="col">
+                                    <input type="text" readonly class="form-control-plaintext" value="@cola3.utilizacion" />
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-5 col-form-label">Lq:</label>
+                                <div class="col">
+                                    <input type="text" readonly class="form-control-plaintext" value="@cola3.lq" />
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-5 col-form-label">Ls:</label>
+                                <div class="col">
+                                    <input type="text" readonly class="form-control-plaintext" value="@cola3.ls" />
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-5 col-form-label">Wq:</label>
+                                <div class="col">
+                                    <input type="text" readonly class="form-control-plaintext" value="@cola3.wq" />
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-5 col-form-label">Ws:</label>
+                                <div class="col">
+                                    <input type="text" readonly class="form-control-plaintext" value="@cola3.ws" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<script src="~/Scripts/Chart.min.js"></script>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+
+<script>
+
+    var lista1X = @Html.Raw(Json.Encode(cola1.probabilidades.Select(t => t.x)));
+    var lista1P = @Html.Raw(Json.Encode(cola1.probabilidades.Select(t => t.p)));
+
+    var ctx1 = $("#prueba1");
+    var myChart1 = new Chart(ctx1, {
+        type: 'bar',
+        data: {
+            labels: lista1X,
+            datasets: [{
+                label: 'P(x)',
+                data: lista1P,
+                backgroundColor: 'rgb(54, 162, 235, 0.8)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+
+    var lista2X = @Html.Raw(Json.Encode(cola2.probabilidades.Select(t => t.x)));
+    var lista2P = @Html.Raw(Json.Encode(cola2.probabilidades.Select(t => t.p)));
+
+    var ctx2 = $("#prueba2");
+    var myChart2 = new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: lista2X,
+            datasets: [{
+                label: 'P(x)',
+                data: lista2P,
+                backgroundColor: 'rgb(54, 162, 235, 0.8)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+
+    var lista3X = @Html.Raw(Json.Encode(cola3.probabilidades.Select(t => t.x)));
+    var lista3P = @Html.Raw(Json.Encode(cola3.probabilidades.Select(t => t.p)));
+
+    var ctx3 = $("#prueba3");
+    var myChart3 = new Chart(ctx3, {
+        type: 'bar',
+        data: {
+            labels: lista3X,
+            datasets: [{
+                label: 'P(x)',
+                data: lista3P,
+                backgroundColor: 'rgb(54, 162, 235, 0.8)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+</script>
+
+
+

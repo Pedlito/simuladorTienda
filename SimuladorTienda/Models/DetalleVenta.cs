@@ -11,9 +11,9 @@ namespace SimuladorTienda.Models
         public tbproducto producto { get; set; }
         public int cantidad { get; set; }
 
-        public double getUtilidad()
+        public decimal getUtilidad()
         {
-            return (double)((producto.precio - producto.costo) * cantidad);
+            return (decimal)((producto.precio - producto.costo) * cantidad);
         }
     }
 }

@@ -8,6 +8,12 @@
                 Producto
             </th>
             <th>
+                Costo
+            </th>
+            <th>
+                Precio
+            </th>
+            <th>
                 Utilidad
             </th>
             <th>
@@ -25,13 +31,19 @@
                     @item.producto.nombre
                 </td>
                 <td>
-                    @item.getUtilidad()
+                    Q @item.producto.costo
+                </td>
+                <td>
+                    Q @item.producto.precio
+                </td>
+                <td>
+                    Q @item.getUtilidad()
                 </td>
                 <td>
                     @item.cantidad
                 </td>
                 <td>
-                    @(item.getUtilidad() * item.cantidad)
+                    Q @(item.getUtilidad() * item.cantidad)
                 </td>
             </tr>
         }

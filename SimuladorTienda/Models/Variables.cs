@@ -9,7 +9,6 @@ namespace SimuladorTienda.Models
     {
         public int tasaLlegadaMinima { get; set; }
         public int tasaLlegadaMaxima { get; set; }
-        public int tasaServicio { get; set; }
         public int cantComprasMinima { get; set; }
         public int cantComprasMaxima { get; set; }
         public int horasSimular { get; set; }
